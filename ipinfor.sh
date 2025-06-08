@@ -1,9 +1,10 @@
 #!/bin/bash
 
+# grab interface....ens 33 and save it to variable
+INTERFACE=$(ip r | grep default | cut -d' ' -f5)
+
+# grab ip add of that interface and print
+echo IPADDR=$(ip a show $INTERFACE | grep inet | head -n1 | tr -s ' ' | cut -d' ' -f3 | cut -d/ -f1)
 
 
 
-iface=$(ip -o link show | awk -F': ' '{print $2}' | grep '^ens' | head -n1)
-# grab interface and save to variable
-ip a s "$iface" | grep -w inet | awk '{print $2}'
-# print ip addr
